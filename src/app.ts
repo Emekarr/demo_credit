@@ -1,6 +1,11 @@
 import express, { Application, Response, Request } from 'express';
 import cors from 'cors';
 
+// startups
+import('./startups/index').then((startup) => {
+	startup.default();
+});
+
 class App {
 	private express: Application;
 
