@@ -1,0 +1,19 @@
+{
+  "name": "demo_credit",
+  "version": "0.0.1",
+  "description": "NodeJS Backend for DemoCredit",
+  "main": "server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Emekarr/demo_credit.git"
+  },
+  "author": "Chiemekam Anyanwu-Ebere",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Emekarr/demo_credit/issues"
+  },
+  "homepage": "https://github.com/Emekarr/demo_credit#readme"
+}
