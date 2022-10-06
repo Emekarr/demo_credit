@@ -1,19 +1,47 @@
 {
-  "name": "demo_credit",
-  "version": "0.0.1",
-  "description": "NodeJS Backend for DemoCredit",
-  "main": "server.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Emekarr/demo_credit.git"
-  },
-  "author": "Chiemekam Anyanwu-Ebere",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Emekarr/demo_credit/issues"
-  },
-  "homepage": "https://github.com/Emekarr/demo_credit#readme"
+	"name": "demo_credit",
+	"version": "0.0.1",
+	"description": "NodeJS Backend for DemoCredit",
+	"main": "server.ts",
+	"scripts": {
+		"copyAssets": "ts-node tools/copyAssets.ts",
+		"dev": "env-cmd -f .env nodemon ./src/workers/worker.ts",
+		"build": "del build copyAssets && tsc && npm run copyAssets",
+		"start": "npm run build && node build/src/workers/worker.js"
+	},
+	"engines": {
+		"node": "16.x",
+		"yarn": "1.x"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Emekarr/demo_credit.git"
+	},
+	"author": "Chiemekam Anyanwu-Ebere",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Emekarr/demo_credit/issues"
+	},
+	"homepage": "https://github.com/Emekarr/demo_credit#readme",
+	"devDependencies": {
+		"@types/cors": "^2.8.12",
+		"@types/express": "^4.17.14",
+		"@types/node": "^18.8.3",
+		"@types/shelljs": "^0.8.11",
+		"env-cmd": "^10.1.0",
+		"nodemon": "^2.0.20",
+		"rimraf": "^3.0.2",
+		"shelljs": "^0.8.5",
+		"ts-node": "^10.9.1",
+		"typescript": "^4.8.4"
+	},
+	"dependencies": {
+		"@sendgrid/mail": "^7.7.0",
+		"cors": "^2.8.5",
+		"del-cli": "^5.0.0",
+		"ejs": "^3.1.8",
+		"express": "^4.18.1",
+		"joi": "^17.6.2",
+		"knex": "^2.3.0"
+	}
 }
