@@ -1,5 +1,6 @@
 import express, { Application, Response, Request } from 'express';
 import cors from 'cors';
+import ServerResponse from './utils/response';
 
 // startups
 import('./startups/index').then((startup) => {
@@ -25,6 +26,12 @@ class App {
 		this.express.use(
 			express.urlencoded({ extended: true, limit: process.env.JSON_LIMIT }),
 		);
+
+		this.express.use('*', (req: Request, res: Response) => {
+			new ServerResponse(
+				`the route ${req.method} ${req.originalUrl} does not exist.`,
+			).respond(res, 404);
+		});
 	}
 
 	listen(port: string, cb: () => void) {
