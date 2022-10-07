@@ -10,5 +10,9 @@ const config: Knex.Config = {
 };
 
 export default () => {
-	knex(config);
+	const knexInstance = knex(config);
+
+	return {
+		knexInstance,
+	};
 };
