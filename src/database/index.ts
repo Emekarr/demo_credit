@@ -1,5 +1,5 @@
 import db_instances from './db_instances';
-import knex from './knex';
+import knex from './knex/knexfile';
 
 export default {
 	knex: () => {
