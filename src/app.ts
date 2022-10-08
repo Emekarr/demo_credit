@@ -1,6 +1,11 @@
 import express, { Application, Response, Request } from 'express';
 import cors from 'cors';
+
+// utils
 import ServerResponse from './utils/response';
+
+// middlewares
+import ErrorMiddleware from './middleware/error';
 
 // startups
 import('./startups/index').then((startup) => {
@@ -32,6 +37,8 @@ class App {
 				`the route ${req.method} ${req.originalUrl} does not exist.`,
 			).respond(res, 404);
 		});
+
+		this.express.use(ErrorMiddleware);
 	}
 
 	listen(port: string, cb: () => void) {
