@@ -1,8 +1,7 @@
 import { Knex } from 'knex';
 
 import { BaseModelType } from '../../../database/repository/type.repository';
-import db_instances from '../../../database/db_instances';
-const knexInstance: Knex<any, unknown[]> = (db_instances as any)['knex'];
+import { generateDbId } from '../../../database/utils';
 
 export interface UserType extends BaseModelType {
 	username: string;
@@ -10,13 +9,13 @@ export interface UserType extends BaseModelType {
 	password: string;
 }
 
-const UserModel = knexInstance.schema.createTable(
-	'Users',
-	(tb: Knex.CreateTableBuilder) => {
-		tb.string('id').primary();
+export default (kn: Knex) => {
+	return kn.schema.createTable('Users', (tb: Knex.CreateTableBuilder) => {
+		tb.string('id').primary().defaultTo(generateDbId());
 		tb.string('email').unique().notNullable();
 		tb.string('username').unique().notNullable();
-	},
-);
-
-export default UserModel;
+		tb.string('password').unique().notNullable();
+		tb.timestamp('createdAt').defaultTo(kn.fn.now());
+		tb.timestamp('updatedAt').defaultTo(kn.fn.now());
+	});
+};
