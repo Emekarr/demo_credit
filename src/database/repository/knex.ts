@@ -43,31 +43,38 @@ export default class KnexRepository<T extends BaseModelType>
 			.update(payload);
 	}
 
-	async findOneById(id: string, opts: Partial<RepositoryMethodOptions>) {
-		return await this.knex
-			.select(...(opts.selectedFields || []))
-			.from<T>(this.tableName)
-			.where('id', id);
+	async findOneById(
+		id: string,
+		opts: Partial<RepositoryMethodOptions>,
+	): Promise<T> {
+		return (
+			(await this.knex
+				.select(...(opts.selectedFields || []))
+				.from<T>(this.tableName)
+				.where('id', id)) as any
+		)[0] as T;
 	}
 
 	async findOneByFilter(
 		filter: Partial<T>,
 		opts: Partial<RepositoryMethodOptions>,
-	) {
-		return await this.knex
-			.select(...(opts.selectedFields || []))
-			.from<T>(this.tableName)
-			.where(filter);
+	): Promise<T> {
+		return (
+			(await this.knex
+				.select(...(opts.selectedFields || []))
+				.from<T>(this.tableName)
+				.where(filter)) as any
+		)[0] as T;
 	}
 
 	async findManyByFilter(
 		filter: Partial<T>,
 		opts: Partial<RepositoryMethodOptions>,
-	) {
-		return await this.knex
+	): Promise<T[]> {
+		return (await this.knex
 			.select(...(opts.selectedFields || []))
 			.from<T>(this.tableName)
-			.where(filter);
+			.where(filter)) as T[];
 	}
 
 	async deleteOneById(id: string, opts: Partial<RepositoryMethodOptions>) {
