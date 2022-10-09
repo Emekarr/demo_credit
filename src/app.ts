@@ -7,6 +7,9 @@ import ServerResponse from './utils/response';
 // middlewares
 import ErrorMiddleware from './middleware/error';
 
+// routes
+import router from './routes';
+
 // startups
 import('./startups/index').then((startup) => {
 	startup.default();
@@ -31,6 +34,8 @@ class App {
 		this.express.use(
 			express.urlencoded({ extended: true, limit: process.env.JSON_LIMIT }),
 		);
+
+		this.express.use('/api', router);
 
 		this.express.use('*', (req: Request, res: Response) => {
 			new ServerResponse(
