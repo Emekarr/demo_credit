@@ -8,21 +8,33 @@ export interface RepositoryType {
 	deleteOneById: (id: string, opts: any) => any;
 	deleteOneByFilter: (filter: any, opts: any) => any;
 
-	createOneTrx: (payload: any, transactionId: any, opts: any) => any;
+	createOneTrx: (
+		payload: any,
+		transactionId: TransactionType,
+		opts: any,
+	) => any;
 	updateOneByIdTrx: (
 		id: string,
-		transactionId: any,
+		transactionId: TransactionType,
 		payload: any,
 		opts: any,
 	) => any;
 	updateOneByFilterTrx: (
 		filter: any,
-		transactionId: any,
+		transactionId: TransactionType,
 		payload: any,
 		opts: any,
 	) => any;
-	deleteOneByIdTrx: (id: string, transactionId: any, opts: any) => any;
-	deleteOneByFilterTrx: (filter: any, transactionId: any, opts: any) => any;
+	deleteOneByIdTrx: (
+		id: string,
+		transactionId: TransactionType,
+		opts: any,
+	) => any;
+	deleteOneByFilterTrx: (
+		filter: any,
+		transactionId: TransactionType,
+		opts: any,
+	) => any;
 	startTransaction: () => any;
 }
 
@@ -37,3 +49,5 @@ export interface BaseModelType {
 	createdAt: Date;
 	updatedAt: Date;
 }
+
+export interface TransactionType {}

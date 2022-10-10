@@ -2,6 +2,7 @@ import {
 	BaseModelType,
 	RepositoryMethodOptions,
 	RepositoryType,
+	TransactionType,
 } from './type.repository';
 import { Knex } from 'knex';
 import dbInstances from '../db_instances';
@@ -94,9 +95,10 @@ export default class KnexRepository<T extends BaseModelType>
 
 	async createOneTrx(
 		payload: T,
-		transaction: Knex.Transaction,
+		trxType: TransactionType,
 		opts: Partial<RepositoryMethodOptions>,
 	) {
+		const transaction = trxType as Knex.Transaction;
 		try {
 			const result = await transaction(this.tableName).insert(payload);
 			if (opts.commitTransaction) transaction.commit();
@@ -109,9 +111,10 @@ export default class KnexRepository<T extends BaseModelType>
 	async updateOneByIdTrx(
 		id: string,
 		payload: Partial<T>,
-		transaction: Knex.Transaction,
+		trxType: TransactionType,
 		opts: Partial<RepositoryMethodOptions>,
 	) {
+		const transaction = trxType as Knex.Transaction;
 		try {
 			const result = transaction(this.tableName)
 				.select(...(opts.selectedFields || []))
@@ -127,9 +130,10 @@ export default class KnexRepository<T extends BaseModelType>
 	async updateOneByFilterTrx(
 		filter: Partial<T>,
 		payload: Partial<T>,
-		transaction: Knex.Transaction,
+		trxType: TransactionType,
 		opts: Partial<RepositoryMethodOptions>,
 	) {
+		const transaction = trxType as Knex.Transaction;
 		try {
 			const result = transaction(this.tableName)
 				.select(...(opts.selectedFields || []))
@@ -144,9 +148,10 @@ export default class KnexRepository<T extends BaseModelType>
 
 	async deleteOneByIdTrx(
 		id: string,
-		transaction: Knex.Transaction,
+		trxType: TransactionType,
 		opts: Partial<RepositoryMethodOptions>,
 	) {
+		const transaction = trxType as Knex.Transaction;
 		try {
 			const result = await transaction
 				.from<T>(this.tableName)
@@ -161,9 +166,10 @@ export default class KnexRepository<T extends BaseModelType>
 
 	async deleteOneByFilterTrx(
 		filter: Partial<T>,
-		transaction: Knex.Transaction,
+		trxType: TransactionType,
 		opts: Partial<RepositoryMethodOptions>,
 	) {
+		const transaction = trxType as Knex.Transaction;
 		try {
 			const result = await transaction
 				.from<T>(this.tableName)
