@@ -5,11 +5,14 @@ export default abstract class Hasher {
 
 	private static saltRounds = 10;
 
-	static async hashPassword(password: string) {
+	static async hashPassword(password: string): Promise<string> {
 		return await this.hasher.hash(password, await this._genSalt());
 	}
 
-	static async verifyPassword(password: string, hash: string) {
+	static async verifyPassword(
+		password: string,
+		hash: string,
+	): Promise<boolean> {
 		return await this.hasher.compare(password, hash);
 	}
 
