@@ -5,11 +5,14 @@ import userRepository from '../repository/userRepository';
 import Emitter from '../../../event_emitter/emitter';
 import events from '../../../event_emitter/events';
 import { generateDbId } from '../../../database/utils';
+import Hasher from '../../../authentication/hasher';
 
 export default abstract class CreateNewUserUseCase {
 	private static validateNewUserData = validateNewUserData;
 
 	private static userRepository = userRepository;
+
+	private static hasher = Hasher;
 
 	private static emitter = Emitter;
 
@@ -23,6 +26,9 @@ export default abstract class CreateNewUserUseCase {
 			this.rejectOnUserExists({ username: result.value.username }),
 			this.rejectOnUserExists({ email: result.value.email }),
 		]);
+		result.value.password = await this.hasher.hashPassword(
+			result.value.password,
+		);
 		const trxId = await this.userRepository.startTransaction();
 		const user = await this.userRepository.createOneTrx(result.value, trxId, {
 			returnCreated: true,
