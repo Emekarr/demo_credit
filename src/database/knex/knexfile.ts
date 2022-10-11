@@ -9,10 +9,12 @@ const config: Knex.Config = {
 	},
 };
 
-export default () => {
+export const connectToDB = () => {
 	const knexInstance = knex(config);
 
 	return {
 		knexInstance,
 	};
 };
+
+export default config;
