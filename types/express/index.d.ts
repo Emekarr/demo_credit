@@ -4,3 +4,4 @@ declare namespace Express {
 	}
 }
 declare module 'flutterwave-node-v3';
+declare module 'uniqid';
