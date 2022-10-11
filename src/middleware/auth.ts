@@ -27,6 +27,7 @@ const AuthMiddleware = async (
 		req.user.username = result.username;
 		next();
 	} catch (err) {
+		console.log(err);
 		next(new CustomError('access denied', 403));
 	}
 };
