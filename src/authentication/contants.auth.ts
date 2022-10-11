@@ -1,0 +1,6 @@
+export default {
+	TOKEN_TYPE: {
+		REFRESH_TOKEN: 'REFRESH_TOKEN',
+		ACCESS_TOKEN: 'ACCESS_TOKEN',
+	},
+};

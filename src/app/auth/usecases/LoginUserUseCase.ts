@@ -48,5 +48,6 @@ export default abstract class LoginUserUseCase {
 			user?.password,
 		);
 		if (!success) throw new CustomError('incorrect password sent', 401);
+		return user;
 	}
 }
