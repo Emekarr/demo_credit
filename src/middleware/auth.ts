@@ -22,9 +22,11 @@ const AuthMiddleware = async (
 		)) as TokenGenPayload;
 		if (result.type != contantsAuth.TOKEN_TYPE.ACCESS_TOKEN)
 			return new ServerResponse('invalid access token used').respond(res, 401);
-		req.user.email = result.email;
-		req.user.id = result.userId;
-		req.user.username = result.username;
+		req.user = {
+			email: result.email,
+			id: result.userId,
+			username: result.username,
+		};
 		next();
 	} catch (err) {
 		console.log(err);
