@@ -38,7 +38,7 @@ Basic Wallet Requirements -
 4. A user can withdraw funds from their account.  
 
 **Milestones**
- - [] User SignUp and Account SetUp
+ - [X] User SignUp and Account SetUp
  - [] Payment Service Integrated
  - [] Funds Transfer Implemented  
 
