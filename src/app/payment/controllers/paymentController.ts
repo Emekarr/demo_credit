@@ -59,6 +59,7 @@ export default abstract class PaymentController {
 	) {
 		try {
 			const payload = req.body;
+			payload.sender = req.user.id;
 			await TransferMoneyUseCase.execute(payload);
 			new ServerResponse('money transfered successfully', null, true).respond(
 				res,
