@@ -4,10 +4,12 @@ import AuthMiddleware from '../../middleware/auth';
 
 const router = Router();
 
+router.post('/top-up/card', AuthMiddleware, PaymentController.creditWalletCard);
+
 router.post(
-	'/top-up/card',
+	'/validate-charge',
 	AuthMiddleware,
-	PaymentController.creditWalletCard,
+	PaymentController.validateCharge,
 );
 
 export default router;

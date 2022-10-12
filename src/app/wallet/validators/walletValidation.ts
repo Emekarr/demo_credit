@@ -8,3 +8,9 @@ export const validateNewWalletData = (data: WalletType) => {
 		balance: Joi.number().equal(0),
 	}).validate(data) as Joi.ValidationResult<WalletType>;
 };
+
+export const validateWalletBalanceUpdate = (balance: number) => {
+	return Joi.object({
+		balance: Joi.number().positive().required(),
+	}).validate({ balance }) as Joi.ValidationResult<{ balance: number }>;
+};
