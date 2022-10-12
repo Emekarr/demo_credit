@@ -6,6 +6,7 @@ import { fetchWalletBalance } from '../utils';
 import UpdateWalletUseCase from '../../wallet/usecases/UpdateWalletUseCase';
 import CreateTransactionUseCase from '../../transaction/usecases/CreateTransactionUseCase';
 import { Actions, PaymentTypes, Status } from '../constants.payment';
+import generateId from '../../../utils/generateId';
 
 export default abstract class TransferMoneyUseCase {
 	private static validateTransferMoneyData = validateTransferMoneyData;
@@ -29,6 +30,7 @@ export default abstract class TransferMoneyUseCase {
 			await this.fetchWalletBalance(result.value.reciever);
 
 		const trx = await this.transactionRepository.startTransaction();
+		const transactionId = generateId('DC-INAPP-');
 		const senderBalance = senderWalletBalance - result.value.amount;
 		await this.UpdateWalletUseCase.execute(
 			senderWalletId,
@@ -41,7 +43,7 @@ export default abstract class TransferMoneyUseCase {
 				sentFrom: senderWalletId,
 				sentTo: recieverWalletId,
 				balance: senderBalance,
-				transactionId: '',
+				transactionId,
 				description: result.value.description,
 				action: Actions.DEBIT,
 				status: Status.SUCCESS,
@@ -63,7 +65,7 @@ export default abstract class TransferMoneyUseCase {
 				sentFrom: senderWalletId,
 				sentTo: recieverWalletId,
 				balance: senderBalance,
-				transactionId: '',
+				transactionId,
 				description: result.value.description,
 				action: Actions.DEBIT,
 				status: Status.SUCCESS,
