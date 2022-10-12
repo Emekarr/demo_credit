@@ -1,4 +1,4 @@
-import { TransactionType } from '../database/repository/type.repository';
+import { DatabaseTransactionType } from '../database/repository/type.repository';
 
 export interface EmitterEventType {
 	EVENT: string;
@@ -7,5 +7,5 @@ export interface EmitterEventType {
 
 export interface UserCreatedPayload {
 	userId: string;
-	trxId: TransactionType;
+	trxId: DatabaseTransactionType;
 }
