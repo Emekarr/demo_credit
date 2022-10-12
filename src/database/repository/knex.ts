@@ -116,7 +116,7 @@ export default class KnexRepository<T extends BaseModelType>
 	) {
 		const transaction = trxType as Knex.Transaction;
 		try {
-			const result = transaction(this.tableName)
+			const result = await transaction(this.tableName)
 				.select(...(opts.selectedFields || []))
 				.where('id', id)
 				.update(payload);
@@ -135,7 +135,7 @@ export default class KnexRepository<T extends BaseModelType>
 	) {
 		const transaction = trxType as Knex.Transaction;
 		try {
-			const result = transaction(this.tableName)
+			const result = await transaction(this.tableName)
 				.select(...(opts.selectedFields || []))
 				.where(filter)
 				.update(payload);
