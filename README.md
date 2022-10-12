@@ -39,8 +39,8 @@ Basic Wallet Requirements -
 
 **Milestones**
  - [X] User SignUp and Account SetUp
- - [] Payment Service Integrated
- - [] Funds Transfer Implemented  
+ - [X] Payment Service Integrated
+ - [X] Funds Transfer Implemented  
 
 
 **Entity Relationship Diagram**  
