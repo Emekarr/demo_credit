@@ -18,4 +18,6 @@ router.post(
 	PaymentController.executeInAppTransfer,
 );
 
+router.post('/payout', AuthMiddleware, PaymentController.initiatePayOut);
+
 export default router;

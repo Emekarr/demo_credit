@@ -1,13 +1,8 @@
-import {
-	Actions,
-	PaymentTypes,
-	Status,
-} from '../app/payment/constants.payment';
-import { TransactionType } from '../app/transaction/model/Transaction';
 import CreateTransactionUseCase from '../app/transaction/usecases/CreateTransactionUseCase';
 import CreateWalletUseCase from '../app/wallet/usecases/CreateWalletUseCase';
-import { PaymentTransactionType } from '../database/repository/type.repository';
+import UpdateWalletUseCase from '../app/wallet/usecases/UpdateWalletUseCase';
 import { EmitterEventType, UserCreatedPayload } from './type.events';
+import walletRepository from '../app/wallet/repository/walletRepository';
 
 export default {
 	USER: {
@@ -26,11 +21,16 @@ export default {
 	PAYMENT: {
 		TOPUP_PAYMENT: {
 			EVENT: 'CARD_TOPUP_PAYMENT_MADE',
-			ACTION: async (
-				trx: TransactionType[],
-				paymentTrx: PaymentTransactionType,
-			) => {
-				await CreateTransactionUseCase.execute(trx[0], paymentTrx, true);
+			ACTION: async ([trx, paymentTrx]: any[]) => {
+				await CreateTransactionUseCase.execute(trx, paymentTrx, true);
+			},
+		} as EmitterEventType,
+		PAYOUT_COMPLETED: {
+			EVENT: 'PAYOUT_COMPLETED',
+			ACTION: async ([paymentTrx, walletBalance, walletId]: any[]) => {
+				const trx = await walletRepository.startTransaction();
+				await CreateTransactionUseCase.execute(paymentTrx, trx, false);
+				await UpdateWalletUseCase.execute(walletId, walletBalance, trx, true);
 			},
 		} as EmitterEventType,
 	},

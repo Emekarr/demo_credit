@@ -5,6 +5,7 @@ export interface PaymentType {
 		flwRef: string,
 	) => Promise<ValidateChargeResponse | null>;
 	verifyTransaction: (id: string) => Promise<string | null>;
+	initiatePayout: (payload: PayoutType) => Promise<any>;
 }
 
 export interface ValidateChargeResponse {
@@ -31,4 +32,21 @@ export interface TransferMoneyType {
 	reciever: string;
 	amount: number;
 	description: string;
+}
+
+export interface PayoutType {
+	bankId: string;
+	accountNumber: string;
+	narration: string;
+	amount: number;
+}
+
+export interface PayoutSuccessType {
+	accountNumber: string;
+	fullName: string;
+	createdAt: string;
+	currency: string;
+	reference: string;
+	bankName: string;
+	narration: string;
 }

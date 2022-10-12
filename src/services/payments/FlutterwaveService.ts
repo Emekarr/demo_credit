@@ -1,7 +1,10 @@
 import Flutterwave from 'flutterwave-node-v3';
+import generateId from '../../utils/generateId';
 import {
 	ChargeCardPayload,
 	PaymentType,
+	PayoutSuccessType,
+	PayoutType,
 	ValidateChargeResponse,
 } from './type.payments';
 
@@ -85,5 +88,28 @@ export default class FlutterwaveService implements PaymentType {
 			transactionToken = null;
 		}
 		return transactionToken;
+	}
+
+	async initiatePayout(payload: PayoutType): Promise<PayoutSuccessType | null> {
+		try {
+			const response = await this.flw.Transfer.initiate({
+				...payload,
+				debit_currency: 'NGN',
+				reference: generateId('DC-REF-'),
+				currency: 'NGN',
+				account_bank: payload.bankId, //This is the recipient bank code. Get list here :https://developer.flutterwave.com/v3.0/reference#get-all-banks
+				account_number: payload.accountNumber,
+			});
+			return {
+				...response.data,
+				accountNumber: response.data.account_number,
+				fullName: response.data.full_name,
+				createdAt: response.data.created_at,
+				bankName: response.data.bank_name,
+			};
+		} catch (err) {
+			console.log('alert dev team through sentry and log error');
+			return null;
+		}
 	}
 }

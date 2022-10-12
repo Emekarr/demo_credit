@@ -1,6 +1,7 @@
 import Joi from 'joi';
 import {
 	ChargeCardPayload,
+	PayoutType,
 	TransferMoneyType,
 } from '../../../services/payments/type.payments';
 
@@ -24,4 +25,13 @@ export const validateTransferMoneyData = (data: TransferMoneyType) => {
 		description: Joi.string(),
 		amount: Joi.number().positive().required(),
 	}).validate(data) as Joi.ValidationResult<TransferMoneyType>;
+};
+
+export const validatePayOutData = (data: PayoutType) => {
+	return Joi.object({
+		bankId: Joi.string().required(),
+		accountNumber: Joi.string().required(),
+		narration: Joi.string().required(),
+		amount: Joi.number().positive().required(),
+	}).validate(data) as Joi.ValidationResult<PayoutType>;
 };
