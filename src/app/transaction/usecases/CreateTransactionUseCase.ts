@@ -1,7 +1,7 @@
 import { generateDbId } from '../../../database/utils';
 import CustomError from '../../../errors/customError';
 import { TransactionType } from '../model/Transaction';
-import { PaymentTransactionType } from '../../../database/repository/type.repository';
+import { DatabaseTransactionType } from '../../../database/repository/type.repository';
 import transactionRepository from '../repository/transactionRepository';
 import { validateNewTransactionData } from '../validators/transactionValidation';
 
@@ -12,7 +12,7 @@ export default abstract class CreateTransactionUseCase {
 
 	static async execute(
 		transactionData: Partial<TransactionType>,
-		transaction: PaymentTransactionType,
+		transaction: DatabaseTransactionType,
 		commitTransaction: boolean,
 	) {
 		const result = this.validateNewTransactionData(transactionData);

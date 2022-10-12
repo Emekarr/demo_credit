@@ -1,4 +1,4 @@
-import { PaymentTransactionType } from '../../../database/repository/type.repository';
+import { DatabaseTransactionType } from '../../../database/repository/type.repository';
 import { generateDbId } from '../../../database/utils';
 import CustomError from '../../../errors/customError';
 import { WalletType } from '../models/Wallet';
@@ -9,7 +9,7 @@ export default abstract class CreateWalletUseCase {
 	private static walletRepository = walletRepository;
 	private static validateNewWalletData = validateNewWalletData;
 
-	static async execute(userId: string, trxId: PaymentTransactionType) {
+	static async execute(userId: string, trxId: DatabaseTransactionType) {
 		const payload: Partial<WalletType> = {
 			id: generateDbId(),
 			userId,
