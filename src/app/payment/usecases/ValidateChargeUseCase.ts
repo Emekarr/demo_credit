@@ -45,17 +45,21 @@ export default abstract class ValidateChargeUseCase {
 
 		const transaction = await this.walletRepository.startTransaction();
 		await UpdateWalletUseCase.execute(id, balance + amount, transaction, true);
-		this.emitter.emit(this.events.PAYMENT.TOPUP_PAYMENT.EVENT, {
-			sentFrom: id,
-			sentTo: id,
-			transactionId: flwTrxId,
-			action: Actions.CREDIT,
-			status: Status.SUCCESS,
-			paymentType: PaymentTypes.CARD_PAYMENT,
-			amount: response.amount.toString(),
-			description,
-			balance: balance + amount,
-		} as TransactionType);
+		this.emitter.emit(
+			this.events.PAYMENT.TOPUP_PAYMENT.EVENT,
+			{
+				sentFrom: id,
+				sentTo: id,
+				transactionId: flwTrxId,
+				action: Actions.CREDIT,
+				status: Status.SUCCESS,
+				paymentType: PaymentTypes.CARD_PAYMENT,
+				amount: response.amount.toString(),
+				description,
+				balance: balance + amount,
+			} as TransactionType,
+			transaction,
+		);
 		return response;
 	}
 }

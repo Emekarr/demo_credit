@@ -10,29 +10,29 @@ export interface RepositoryType {
 
 	createOneTrx: (
 		payload: any,
-		transactionId: TransactionType,
+		transactionId: PaymentTransactionType,
 		opts: any,
 	) => any;
 	updateOneByIdTrx: (
 		id: string,
-		transactionId: TransactionType,
+		transactionId: PaymentTransactionType,
 		payload: any,
 		opts: any,
 	) => any;
 	updateOneByFilterTrx: (
 		filter: any,
-		transactionId: TransactionType,
+		transactionId: PaymentTransactionType,
 		payload: any,
 		opts: any,
 	) => any;
 	deleteOneByIdTrx: (
 		id: string,
-		transactionId: TransactionType,
+		transactionId: PaymentTransactionType,
 		opts: any,
 	) => any;
 	deleteOneByFilterTrx: (
 		filter: any,
-		transactionId: TransactionType,
+		transactionId: PaymentTransactionType,
 		opts: any,
 	) => any;
 	startTransaction: () => any;
@@ -50,4 +50,4 @@ export interface BaseModelType {
 	updatedAt: Date;
 }
 
-export interface TransactionType {}
+export interface PaymentTransactionType {}

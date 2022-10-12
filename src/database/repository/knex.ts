@@ -2,7 +2,7 @@ import {
 	BaseModelType,
 	RepositoryMethodOptions,
 	RepositoryType,
-	TransactionType,
+	PaymentTransactionType,
 } from './type.repository';
 import { Knex } from 'knex';
 import dbInstances from '../db_instances';
@@ -95,7 +95,7 @@ export default class KnexRepository<T extends BaseModelType>
 
 	async createOneTrx(
 		payload: T,
-		trxType: TransactionType,
+		trxType: PaymentTransactionType,
 		opts: Partial<RepositoryMethodOptions>,
 	) {
 		const transaction = trxType as Knex.Transaction;
@@ -111,7 +111,7 @@ export default class KnexRepository<T extends BaseModelType>
 	async updateOneByIdTrx(
 		id: string,
 		payload: Partial<T>,
-		trxType: TransactionType,
+		trxType: PaymentTransactionType,
 		opts: Partial<RepositoryMethodOptions>,
 	) {
 		const transaction = trxType as Knex.Transaction;
@@ -130,7 +130,7 @@ export default class KnexRepository<T extends BaseModelType>
 	async updateOneByFilterTrx(
 		filter: Partial<T>,
 		payload: Partial<T>,
-		trxType: TransactionType,
+		trxType: PaymentTransactionType,
 		opts: Partial<RepositoryMethodOptions>,
 	) {
 		const transaction = trxType as Knex.Transaction;
@@ -148,7 +148,7 @@ export default class KnexRepository<T extends BaseModelType>
 
 	async deleteOneByIdTrx(
 		id: string,
-		trxType: TransactionType,
+		trxType: PaymentTransactionType,
 		opts: Partial<RepositoryMethodOptions>,
 	) {
 		const transaction = trxType as Knex.Transaction;
@@ -166,7 +166,7 @@ export default class KnexRepository<T extends BaseModelType>
 
 	async deleteOneByFilterTrx(
 		filter: Partial<T>,
-		trxType: TransactionType,
+		trxType: PaymentTransactionType,
 		opts: Partial<RepositoryMethodOptions>,
 	) {
 		const transaction = trxType as Knex.Transaction;

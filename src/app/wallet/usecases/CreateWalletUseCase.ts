@@ -1,5 +1,4 @@
-import { Knex } from 'knex';
-import { TransactionType } from '../../../database/repository/type.repository';
+import { PaymentTransactionType } from '../../../database/repository/type.repository';
 import { generateDbId } from '../../../database/utils';
 import CustomError from '../../../errors/customError';
 import { WalletType } from '../models/Wallet';
@@ -10,7 +9,7 @@ export default abstract class CreateWalletUseCase {
 	private static walletRepository = walletRepository;
 	private static validateNewWalletData = validateNewWalletData;
 
-	static async execute(userId: string, trxId: TransactionType) {
+	static async execute(userId: string, trxId: PaymentTransactionType) {
 		const payload: Partial<WalletType> = {
 			id: generateDbId(),
 			userId,

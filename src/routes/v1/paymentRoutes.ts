@@ -12,4 +12,10 @@ router.post(
 	PaymentController.validateCharge,
 );
 
+router.post(
+	'/transfer/in-app',
+	AuthMiddleware,
+	PaymentController.executeInAppTransfer,
+);
+
 export default router;

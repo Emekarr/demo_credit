@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { ChargeCardPayload } from '../../../services/payments/type.payments';
 import ServerResponse from '../../../utils/response';
 import ChargeCardUseCase from '../usecases/ChargeCardUseCase';
+import TransferMoneyUseCase from '../usecases/TransferMoneyUseCase';
 import ValidateChargeUseCase from '../usecases/ValidateChargeUseCase';
 
 export default abstract class PaymentController {
@@ -48,5 +49,18 @@ export default abstract class PaymentController {
 		} catch (err) {
 			next(err);
 		}
+	}
+
+	static async executeInAppTransfer(
+		req: Request,
+		res: Response,
+		next: NextFunction,
+	) {
+		const payload = req.body;
+		await TransferMoneyUseCase.execute(payload);
+		new ServerResponse('money transfered successfully', null, true).respond(
+			res,
+			200,
+		);
 	}
 }

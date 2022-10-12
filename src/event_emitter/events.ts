@@ -6,6 +6,7 @@ import {
 import { TransactionType } from '../app/transaction/model/Transaction';
 import CreateTransactionUseCase from '../app/transaction/usecases/CreateTransactionUseCase';
 import CreateWalletUseCase from '../app/wallet/usecases/CreateWalletUseCase';
+import { PaymentTransactionType } from '../database/repository/type.repository';
 import { EmitterEventType, UserCreatedPayload } from './type.events';
 
 export default {
@@ -25,8 +26,11 @@ export default {
 	PAYMENT: {
 		TOPUP_PAYMENT: {
 			EVENT: 'CARD_TOPUP_PAYMENT_MADE',
-			ACTION: async (trx: TransactionType[]) => {
-				await CreateTransactionUseCase.execute(trx[0]);
+			ACTION: async (
+				trx: TransactionType[],
+				paymentTrx: PaymentTransactionType,
+			) => {
+				await CreateTransactionUseCase.execute(trx[0], paymentTrx, true);
 			},
 		} as EmitterEventType,
 	},

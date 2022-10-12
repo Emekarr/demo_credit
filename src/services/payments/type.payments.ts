@@ -25,3 +25,10 @@ export interface ChargeCardPayload {
 	txRef: string;
 	pin: number;
 }
+
+export interface TransferMoneyType {
+	sender: string;
+	reciever: string;
+	amount: number;
+	description: string;
+}

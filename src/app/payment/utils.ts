@@ -5,5 +5,6 @@ export const fetchWalletBalance = async (userId: string) => {
 		{ userId },
 		{ selectedFields: ['balance', 'id'] },
 	);
+	if (!wallet) throw new Error('user not found');
 	return { balance: wallet.balance, id: wallet.id };
 };

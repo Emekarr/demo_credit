@@ -1,5 +1,8 @@
 import Joi from 'joi';
-import { ChargeCardPayload } from '../../../services/payments/type.payments';
+import {
+	ChargeCardPayload,
+	TransferMoneyType,
+} from '../../../services/payments/type.payments';
 
 export const validateNewPaymentData = (data: Partial<ChargeCardPayload>) => {
 	return Joi.object({
@@ -12,4 +15,13 @@ export const validateNewPaymentData = (data: Partial<ChargeCardPayload>) => {
 		txRef: Joi.string().required(),
 		pin: Joi.string().length(4).required(),
 	}).validate(data) as Joi.ValidationResult<ChargeCardPayload>;
+};
+
+export const validateTransferMoneyData = (data: TransferMoneyType) => {
+	return Joi.object({
+		sender: Joi.string().required(),
+		reciever: Joi.string().required(),
+		description: Joi.string(),
+		amount: Joi.number().positive().required(),
+	}).validate(data) as Joi.ValidationResult<TransferMoneyType>;
 };

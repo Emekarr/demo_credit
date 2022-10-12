@@ -1,6 +1,6 @@
 import { number } from 'joi';
 import { Knex } from 'knex';
-import { TransactionType } from '../../../database/repository/type.repository';
+import { PaymentTransactionType } from '../../../database/repository/type.repository';
 import { generateDbId } from '../../../database/utils';
 import CustomError from '../../../errors/customError';
 import { WalletType } from '../models/Wallet';
@@ -15,7 +15,7 @@ export default abstract class UpdateWalletUseCase {
 	static async execute(
 		walletId: string,
 		balance: number,
-		transaction: TransactionType,
+		transaction: PaymentTransactionType,
 		commitTransaction: boolean,
 	) {
 		const result = this.validateWalletBalanceUpdate(balance);
