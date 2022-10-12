@@ -30,21 +30,25 @@ export default abstract class ValidateChargeUseCase {
 			throw new CustomError('id and otp are required fields', 400);
 		const response = await this.paymentService.validateCharge(otp, flwTrxId);
 		const { balance, id } = await this.fetchWalletBalance(userId);
-		if (!response)
-			return this.emitter.emit(this.events.PAYMENT.TOPUP_PAYMENT.EVENT, {
-				sentFrom: id,
-				sentTo: id,
-				transactionId: flwTrxId,
-				action: Actions.CREDIT,
-				status: Status.FAILURE,
-				paymentType: PaymentTypes.CARD_PAYMENT,
-				amount: amount.toString(),
-				description,
-				balance: balance + amount,
-			} as TransactionType);
-
 		const transaction = await this.walletRepository.startTransaction();
-		await UpdateWalletUseCase.execute(id, balance + amount, transaction, true);
+		if (!response)
+			return this.emitter.emit(
+				this.events.PAYMENT.TOPUP_PAYMENT.EVENT,
+				{
+					sentFrom: id,
+					sentTo: id,
+					transactionId: flwTrxId,
+					action: Actions.CREDIT,
+					status: Status.FAILURE,
+					paymentType: PaymentTypes.CARD_PAYMENT,
+					amount: amount.toString(),
+					description,
+					balance: balance + amount,
+				} as TransactionType,
+				transaction,
+			);
+
+		await UpdateWalletUseCase.execute(id, balance + amount, transaction, false);
 		this.emitter.emit(
 			this.events.PAYMENT.TOPUP_PAYMENT.EVENT,
 			{
