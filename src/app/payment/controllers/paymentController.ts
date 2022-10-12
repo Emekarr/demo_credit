@@ -56,11 +56,15 @@ export default abstract class PaymentController {
 		res: Response,
 		next: NextFunction,
 	) {
-		const payload = req.body;
-		await TransferMoneyUseCase.execute(payload);
-		new ServerResponse('money transfered successfully', null, true).respond(
-			res,
-			200,
-		);
+		try {
+			const payload = req.body;
+			await TransferMoneyUseCase.execute(payload);
+			new ServerResponse('money transfered successfully', null, true).respond(
+				res,
+				200,
+			);
+		} catch (err) {
+			next(err);
+		}
 	}
 }
