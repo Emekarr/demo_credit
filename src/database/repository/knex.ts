@@ -104,6 +104,7 @@ export default class KnexRepository<T extends BaseModelType>
 			if (opts.commitTransaction) transaction.commit();
 			return opts.returnCreated ? result : true;
 		} catch (err) {
+			console.log(err);
 			transaction.rollback();
 		}
 	}

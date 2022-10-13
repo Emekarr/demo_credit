@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import { ChargeCardPayload } from '../../../services/payments/type.payments';
 import ServerResponse from '../../../utils/response';
 import ChargeCardUseCase from '../usecases/ChargeCardUseCase';
 import TransferMoneyUseCase from '../usecases/TransferMoneyUseCase';
@@ -13,9 +12,13 @@ export default abstract class PaymentController {
 		next: NextFunction,
 	) {
 		try {
-			const data: ChargeCardPayload = req.body;
+			const data = req.body;
 			data.email = req.user.email;
-			const flwTrxId = await ChargeCardUseCase.execute(data);
+			const flwTrxId = await ChargeCardUseCase.execute(
+				data,
+				req.user.id,
+				data.description,
+			);
 			new ServerResponse(
 				'charge request made',
 				{ transactionId: flwTrxId },
@@ -30,11 +33,9 @@ export default abstract class PaymentController {
 		try {
 			const payload = req.body;
 			const response = await ValidateChargeUseCase.execute(
-				payload.id,
 				payload.otp,
 				req.user.id,
-				payload.description,
-				payload.amount,
+				payload.id,
 			);
 			if (!response)
 				return new ServerResponse(

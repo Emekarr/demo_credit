@@ -13,4 +13,5 @@ export const Actions = {
 export const Status = {
 	SUCCESS: 'SUCCESS',
 	FAILURE: 'FAILURE',
+	PENDING: 'PENDING',
 };

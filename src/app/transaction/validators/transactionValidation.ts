@@ -21,3 +21,11 @@ export const validateNewTransactionData = (data: Partial<TransactionType>) => {
 		amount: Joi.number().required(),
 	}).validate(data) as Joi.ValidationResult<TransactionType>;
 };
+
+export const validateUpdateTransactionStatus = (data: { status: string }) => {
+	return Joi.object({
+		status: Joi.string()
+			.required()
+			.equal(...Object.values(Status)),
+	}).validate(data) as Joi.ValidationResult<{ status: string }>;
+};
